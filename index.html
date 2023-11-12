@@ -171,8 +171,10 @@
   }
 
     // Example usage:
-  const progressValue = parseInt(document.getElementById('progressbar').style.getPropertyValue('--value'), 10);
-  setProgressBarColor(currentPoints);
+  // const progressValue = parseInt(document.getElementById('progressbar').style.getPropertyValue('--value'), 10);
+  // Get the progressbar element
+  const progressbar = document.getElementById('progressbar').style.setProperty('--value', progressValue.toString());
+  setProgressBarColor(progressValue);
 
 </script>
 
