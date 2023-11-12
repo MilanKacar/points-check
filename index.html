@@ -120,6 +120,36 @@
   var currentPoints = 0; // Initialize currentPoints
   const idValue = urlParams.get("id");
   
+
+
+
+  // Function to get and display points
+  function getPoints(id) {
+      return new Promise((resolve, reject) => {
+          fetch("https://qr-app-o5ud4o55aa-ey.a.run.app/getgoogle", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify({ id: id })
+          })
+          .then(response => response.json())
+          .then(data => {
+              const points = parseInt(data.points, 10);
+              // pointsInfo.textContent = `Points: ${points}`;
+              // currentPoints = points; // Update currentPoints here
+              setProgressBarColor(points);
+              document.getElementById('progressbar').style.setProperty('--value', points.toString());
+              resolve(points); // Resolve the Promise with the integer points value
+              
+          })
+          .catch(error => {
+              reject(error); // Reject the Promise if there's an error
+          });
+      });
+  }
+
+
   function setProgressBarColor(progressValue) {
     const progressbar = document.getElementById('progressbar');
     const gradients = {
@@ -141,33 +171,6 @@
     progressbar.style.setProperty('--bar-gradient-end', gradient.end);
   }
   
-
-
-  // Function to get and display points
-  function getPoints(id) {
-      return new Promise((resolve, reject) => {
-          fetch("https://qr-app-o5ud4o55aa-ey.a.run.app/getgoogle", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json"
-              },
-              body: JSON.stringify({ id: id })
-          })
-          .then(response => response.json())
-          .then(data => {
-              const points = parseInt(data.points, 10);
-              // pointsInfo.textContent = `Points: ${points}`;
-              console.log(data);
-              // currentPoints = points; // Update currentPoints here
-              document.getElementById('progressbar').style.setProperty('--value', points.toString());
-              setProgressBarColor(points);
-              resolve(points); // Resolve the Promise with the integer points value
-          })
-          .catch(error => {
-              reject(error); // Reject the Promise if there's an error
-          });
-      });
-  }
 
 
 
