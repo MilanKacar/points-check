@@ -104,7 +104,7 @@
   </header>
   <div>
     <div id="available-points">Available Points</div>
-    <div id="progressbar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="--value: 80; --secondary: #adf;"></div>
+    <div id="progressbar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="--value: 0; --secondary: #adf;"></div>
   </div>
   <footer style="text-align: center; padding: 20px 0; background-color: linear-gradient(to right, #83a4d4, #b6fbff);">
     <a href="https://www.facebook.com" target="_blank" style="margin: 0 10px; color: #4373b9;"><i class="fab fa-facebook-f"></i></a>
@@ -140,6 +140,41 @@
 
 
 
+</script>
+
+<script>
+  // Function to get and display points
+  function getPoints(id) {
+    return new Promise((resolve, reject) => {
+      fetch("https://qr-app-o5ud4o55aa-ey.a.run.app/getgoogle", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ id: id })
+      })
+      .then(response => response.json())
+      .then(data => {
+        const points = parseInt(data.points, 10);
+        document.getElementById('available-points').textContent = `Points: ${points}`;
+        document.getElementById('progressbar').style.setProperty('--value', points);
+        resolve(points);
+      })
+      .catch(error => {
+        console.error("Failed to retrieve points:", error);
+        reject(error);
+      });
+    });
+  }
+
+  // Extract the 'id' parameter from the URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const idValue = urlParams.get("id");
+
+  // Call getPoints if 'id' parameter exists
+  if (idValue) {
+    getPoints(idValue);
+  }
 </script>
 
 
