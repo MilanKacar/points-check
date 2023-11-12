@@ -158,7 +158,9 @@
               const points = parseInt(data.points, 10);
               // pointsInfo.textContent = `Points: ${points}`;
               console.log(data);
-              currentPoints = points; // Update currentPoints here
+              // currentPoints = points; // Update currentPoints here
+              document.getElementById('progressbar').style.setProperty('--value', points.toString());
+              setProgressBarColor(points);
               resolve(points); // Resolve the Promise with the integer points value
           })
           .catch(error => {
@@ -173,14 +175,7 @@
   if (idValue) {
       getPoints(idValue);
   }
-
-    // Example usage:
-  // const progressValue = parseInt(document.getElementById('progressbar').style.getPropertyValue('--value'), 10);
-  // Get the progressbar element
-  console.log(currentPoints);
-  const progressbar = document.getElementById('progressbar').style.setProperty('--value', currentPoints.toString());
-  setProgressBarColor(currentPoints);
-
+  
 </script>
 
 
