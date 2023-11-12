@@ -135,9 +135,44 @@
     progressbar.style.setProperty('--bar-gradient-end', gradient.end);
   }
   
-  // Example usage:
+
+
+  // Function to get and display points
+  function getPoints(id) {
+      return new Promise((resolve, reject) => {
+          fetch("https://qr-app-o5ud4o55aa-ey.a.run.app/getgoogle", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify({ id: id })
+          })
+          .then(response => response.json())
+          .then(data => {
+              const points = parseInt(data.points, 10);
+              pointsInfo.textContent = `Points: ${points}`;
+              currentPoints = points; // Update currentPoints here
+              resolve(points); // Resolve the Promise with the integer points value
+          })
+          .catch(error => {
+              reject(error); // Reject the Promise if there's an error
+          });
+      });
+  }
+
+  // Parse the URL to extract the id parameter
+  const urlParams = new URLSearchParams(window.location.search);
+  var currentPoints = 0; // Initialize currentPoints
+  const idValue = urlParams.get("id");
+
+  // Initial load of points using the extracted id
+  if (idValue) {
+      getPoints(idValue);
+  }
+
+    // Example usage:
   const progressValue = parseInt(document.getElementById('progressbar').style.getPropertyValue('--value'), 10);
-  setProgressBarColor(progressValue);
+  setProgressBarColor(currentPoints);
 
 </script>
 
