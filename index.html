@@ -114,6 +114,12 @@
   </footer>
 </body>
 <script>
+
+  // Parse the URL to extract the id parameter
+  const urlParams = new URLSearchParams(window.location.search);
+  var currentPoints = 0; // Initialize currentPoints
+  const idValue = urlParams.get("id");
+  
   function setProgressBarColor(progressValue) {
     const progressbar = document.getElementById('progressbar');
     const gradients = {
@@ -160,10 +166,7 @@
       });
   }
 
-  // Parse the URL to extract the id parameter
-  const urlParams = new URLSearchParams(window.location.search);
-  var currentPoints = 0; // Initialize currentPoints
-  const idValue = urlParams.get("id");
+
 
   // Initial load of points using the extracted id
   if (idValue) {
