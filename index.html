@@ -31,9 +31,8 @@
     aspect-ratio: 2 / 1;
     border-radius: 50% / 100% 100% 0 0;
     position: relative;
-    
+    display: none;
     overflow: hidden;
-    display: flex;
     align-items: flex-end;
     justify-content: center;
     font-size: calc(var(--size) / 6);
@@ -159,6 +158,8 @@
               progressbar.style.setProperty('--bar-gradient-start', gradient.start);
               progressbar.style.setProperty('--bar-gradient-end', gradient.end);
               progressbar.style.setProperty('--value', points.toString());
+              // Function to show the progress bar after getting points
+              showProgressBar();
               resolve(points); // Resolve the Promise with the integer points value
               
           })
@@ -166,6 +167,11 @@
               reject(error); // Reject the Promise if there's an error
           });
       });
+  }
+
+  function showProgressBar() {
+    const progressBar = document.getElementById('progressbar');
+    progressBar.style.display = 'flex'; // Change to 'flex' or 'block' based on your styling
   }
 
 
