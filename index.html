@@ -114,31 +114,30 @@
   </footer>
 </body>
 <script>
-  // JavaScript to dynamically change the progress bar color gradient
-  const progressbar = document.getElementById('progressbar');
-  const value = parseInt(progressbar.style.getPropertyValue('--value'), 10);
-
-  // Define gradients
-  const gradients = {
-    red: { start: '#ff9999', end: '#8b0000' }, // Light red to dark red
-    yellow: { start: '#ffff99', end: '#ffcc00' }, // Light yellow to dark yellow
-    green: { start: '#99ff99', end: '#006400' } // Light green to dark green
-  };
-
-  let gradient;
-  if (value < 20) {
-    gradient = gradients.red;
-  } else if (value >= 20 && value < 55) {
-    gradient = gradients.yellow;
-  } else {
-    gradient = gradients.green;
+  function setProgressBarColor(progressValue) {
+    const progressbar = document.getElementById('progressbar');
+    const gradients = {
+      red: { start: '#ff9999', end: '#8b0000' },
+      yellow: { start: '#ffff99', end: '#ffcc00' },
+      green: { start: '#99ff99', end: '#006400' },
+    };
+  
+    let gradient;
+    if (progressValue < 20) {
+      gradient = gradients.red;
+    } else if (progressValue >= 20 && progressValue < 55) {
+      gradient = gradients.yellow;
+    } else {
+      gradient = gradients.green;
+    }
+  
+    progressbar.style.setProperty('--bar-gradient-start', gradient.start);
+    progressbar.style.setProperty('--bar-gradient-end', gradient.end);
   }
-
-  // Apply the gradient to the progress bar
-  progressbar.style.setProperty('--bar-gradient-start', gradient.start);
-  progressbar.style.setProperty('--bar-gradient-end', gradient.end);
-
-
+  
+  // Example usage:
+  const progressValue = parseInt(document.getElementById('progressbar').style.getPropertyValue('--value'), 10);
+  setProgressBarColor(progressValue);
 
 </script>
 
