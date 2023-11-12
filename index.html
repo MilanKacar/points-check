@@ -156,7 +156,6 @@
       .then(response => response.json())
       .then(data => {
         const points = parseInt(data.points, 10);
-        document.getElementById('available-points').textContent = `Points: ${points}`;
         document.getElementById('progressbar').style.setProperty('--value', points);
         resolve(points);
       })
