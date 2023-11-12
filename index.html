@@ -157,6 +157,7 @@
           .then(data => {
               const points = parseInt(data.points, 10);
               // pointsInfo.textContent = `Points: ${points}`;
+              console.log(data);
               currentPoints = points; // Update currentPoints here
               resolve(points); // Resolve the Promise with the integer points value
           })
