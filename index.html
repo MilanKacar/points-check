@@ -60,79 +60,80 @@
 </head>
 <body>
   <header>
+    <!-- Logo in the header, which links to the specified URL -->
     <a href="https://tforce.ch/" target="_blank" id="logo">
       <img src="logo.png" alt="Task Force Event Logistique Logo">
     </a>
   </header>
 
   <div id="available-points">Available Points</div>
-  <div id="progressbar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="--value: 0;"></div>
+  <div id="progressbar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
 
-  <footer>
+  <footer style="text-align: center; padding: 20px 0; background-color: linear-gradient(to right, #83a4d4, #b6fbff);">
     <a href="https://www.facebook.com" target="_blank" style="margin: 0 10px; color: #4373b9;"><i class="fab fa-facebook-f"></i></a>
     <a href="https://www.instagram.com" target="_blank" style="margin: 0 10px; color: #4373b9;"><i class="fab fa-instagram"></i></a>
     <a href="https://www.linkedin.com" target="_blank" style="margin: 0 10px; color: #4373b9;"><i class="fab fa-linkedin-in"></i></a>
     <p style="font-size: 10px; color: #4373b9; margin-top: 20px;">Powered by RushB!</p>
   </footer>
 
-  <script>
-    // Define gradients
-    const gradients = {
-      red: { start: '#ff9999', end: '#8b0000' },
-      yellow: { start: '#ffff99', end: '#ffcc00' },
-      green: { start: '#99ff99', end: '#006400' }
-    };
-
-    // Function to get and display points
-    function getPoints(id) {
-      return new Promise((resolve, reject) => {
-        fetch("https://qr-app-o5ud4o55aa-ey.a.run.app/getgoogle", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ id: id })
-        })
-        .then(response => response.json())
-        .then(data => {
-          const points = parseInt(data.points, 10);
-          document.getElementById('available-points').textContent = `Points: ${points}`;
-          document.getElementById('progressbar').style.setProperty('--value', points);
-          updateProgressBarColor(points); // Update the progress bar color
-          resolve(points);
-        })
-        .catch(error => {
-          console.error("Failed to retrieve points:", error);
-          reject(error);
-        });
+<script>
+  // Function to get and display points
+  function getPoints(id) {
+    return new Promise((resolve, reject) => {
+      fetch("https://qr-app-o5ud4o55aa-ey.a.run.app/getgoogle", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ id: id })
+      })
+      .then(response => response.json())
+      .then(data => {
+        const points = parseInt(data.points, 10);
+        document.getElementById('available-points').textContent = `Points: ${points}`;
+        document.getElementById('progressbar').style.setProperty('--value', points);
+        updateProgressBarColor(points); // Update the progress bar color
+        resolve(points);
+      })
+      .catch(error => {
+        console.error("Failed to retrieve points:", error);
+        reject(error);
       });
+    });
+  }
+
+  // Function to dynamically change the progress bar color gradient
+  function updateProgressBarColor(points, progressbar) {
+    let gradient;
+    if (points < 20) {
+      gradient = gradients.red;
+    } else if (points >= 20 && points < 55) {
+      gradient = gradients.yellow;
+    } else {
+      gradient = gradients.green;
     }
+    progressbar.style.setProperty('--bar-gradient-start', gradient.start);
+    progressbar.style.setProperty('--bar-gradient-end', gradient.end);
+  }
 
-    // Function to update the progress bar color based on points
-    function updateProgressBarColor(points) {
-      const progressbar = document.getElementById('progressbar');
-      let gradient;
+  // Parse the URL to extract the id parameter
+  const urlParams = new URLSearchParams(window.location.search);
+  const idValue = urlParams.get("id");
 
-      if (points < 20) {
-        gradient = gradients.red;
-      } else if (points >= 20 && points < 55) {
-        gradient = gradients.yellow;
-      } else {
-        gradient = gradients.green;
-      }
+  // Define gradients
+  const gradients = {
+    red: { start: '#ff9999', end: '#8b0000' },
+    yellow: { start: '#ffff99', end: '#ffcc00' },
+    green: { start: '#99ff99', end: '#006400' }
+  };
 
-      // Apply the new gradient to the progress bar
-      progressbar.style.background = `linear-gradient(to right, ${gradient.start}, ${gradient.end})`;
-    }
-
-    // Extract the 'id' parameter from the URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const idValue = urlParams.get("id");
-
-    // Call getPoints if 'id' parameter exists
-    if (idValue) {
-      getPoints(idValue);
-    }
-  </script>
+  // Initial load of points using the extracted id
+  if (idValue) {
+    getPoints(idValue).then(points => {
+      // Update progress bar color based on points
+      updateProgressBarColor(points, document.getElementById('progressbar'));
+    });
+  }
+</script>
 </body>
 </html>
