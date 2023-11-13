@@ -71,7 +71,7 @@
   }
 
   [role="progressbar"]::after {
-    counter-reset: percentage var(--value);
+    counter-reset: percentage var(--value)/var(--max-value);
     content: counter(percentage);
     color: var(--text-color);
   }
