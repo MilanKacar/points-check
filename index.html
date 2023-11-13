@@ -8,7 +8,7 @@
 <style>
   @keyframes progress {
     0% { --percentage: 0; }
-    100% { --percentage: var(--value); }
+    100% { --percentage: var(--max-value); }
   }
 
   @property --percentage {
@@ -71,7 +71,7 @@
   }
 
   [role="progressbar"]::after {
-    counter-reset: percentage var(--value)/var(--max-value);
+    counter-reset: percentage var(--value);
     content: counter(percentage);
     color: var(--text-color);
   }
@@ -160,7 +160,7 @@
               progressbar.style.setProperty('--bar-gradient-start', gradient.start);
               progressbar.style.setProperty('--bar-gradient-end', gradient.end);
               progressbar.style.setProperty('--value', currentPoints.toString());
-              progressbar.setAttribute('aria-valuemax', startingPoints.toString());
+              progressbar.setAttribute('--max-value', points.toString());
               // Function to show the progress bar after getting points
               showProgressBar();
               resolve(points); // Resolve the Promise with the integer points value
