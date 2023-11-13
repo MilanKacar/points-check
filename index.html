@@ -8,7 +8,7 @@
 <style>
   @keyframes progress {
     0% { --percentage: 0; }
-    100% { --percentage: var(--start-value); }
+    100% { --percentage: var(--progress-value); }
   }
 
   @property --percentage {
@@ -103,7 +103,7 @@
   </header>
   <div>
     <div id="available-points">Dépenses disponibles CHF</div>
-    <div id="progressbar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="--value: 0; --secondary: #adf; --start-value: 1000;"></div>
+    <div id="progressbar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="--value: 0; --secondary: #adf; --progress-value: 1000;"></div>
   </div>
   <footer style="text-align: center; padding: 20px 0; background-color: linear-gradient(to right, #83a4d4, #b6fbff);">
     <a href="https://www.facebook.com" target="_blank" style="margin: 0 10px; color: #4373b9;"><i class="fab fa-facebook-f"></i></a>
@@ -160,7 +160,7 @@
               progressbar.style.setProperty('--bar-gradient-start', gradient.start);
               progressbar.style.setProperty('--bar-gradient-end', gradient.end);
               progressbar.style.setProperty('--value', currentPoints.toString());
-              progressbar.setAttribute('--start-value', points.toString());
+              progressbar.style.setProperty('--progress-value', points.toString());
               // Function to show the progress bar after getting points
               showProgressBar();
               resolve(points); // Resolve the Promise with the integer points value
