@@ -8,7 +8,7 @@
 <style>
   @keyframes progress {
     0% { --percentage: 0; }
-    100% { --percentage: (var(--value) / var(--start-value)) * 100; }
+    100% { --percentage: var(--value); }
   }
 
   @property --percentage {
