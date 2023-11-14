@@ -92,19 +92,30 @@
       display: inline-block; /* Allows for centering with text-align */
       margin-bottom: -120px;
     }
+    
+  .parent-style {
+      position: relative;
+      /* Other styles for the parent div */
+  }
   
   .loading-style {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.5); /* semi-transparent white */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+      animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+  }
 
 .content-style {
     display: none;
