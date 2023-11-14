@@ -42,6 +42,7 @@
 
   #available-points {
     text-align: center;
+    display: none;
     font-size: 26px;
     margin-bottom: 25px;
     box-sizing: border-box;
@@ -98,23 +99,27 @@
       /* Other styles for the parent div */
   }
   
-  .loading-style {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.5); /* semi-transparent white */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 10;
-      animation: spin 2s linear infinite;
+  @keyframes spin {
+      0% {
+          transform: rotate(0deg);
+      }
+      100% {
+          transform: rotate(360deg);
+      }
   }
   
-  @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+  .loading-style {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 50px; /* Size of the loader */
+      height: 50px; /* Size of the loader */
+      background: transparent;
+      border-radius: 50%;
+      border: 5px solid #f3f3f3; /* Light grey border */
+      border-top: 5px solid #3498db; /* Blue color */
+      animation: spin 2s linear infinite;
+      transform: translate(-50%, -50%); /* Center the loader */
   }
 
 .content-style {
@@ -205,6 +210,8 @@
   function showProgressBar() {
     const loadingScreen = document.getElementById('loadingScreen');
     loadingScreen.style.display = 'none';
+    const availablePoints = document.getElementById('available-points');
+    availablePoints.style.display = 'flex';
     const progressBar = document.getElementById('progressbar');
     progressBar.style.display = 'flex'; // Change to 'flex' or 'block' based on your styling
   }
